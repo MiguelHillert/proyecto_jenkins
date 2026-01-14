@@ -1,8 +1,0 @@
-version: '3.8'
-services:
-  app-pichichi:
-    build: .
-    image: pichichi:v1
-    container_name: contenedor-pichichi
-    stdin_open: true
-    tty: true
