@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # --- 1. Tu App Python ---
   app-pichichi:
     build: .
     image: pichichi:v1
@@ -10,6 +11,7 @@ services:
     networks:
       - red-jenkins
 
+  # --- 2. Jenkins (Limitado a 512MB) ---
   jenkins:
     image: jenkins/jenkins:lts
     container_name: mi_jenkins
@@ -17,14 +19,15 @@ services:
     ports:
       - "8080:8080"
       - "50000:50000"
+    environment:
+      - JAVA_OPTS=-Xmx512m
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - red-jenkins
-    depends_on:
-      - sonarqube
 
+  # --- 3. SonarQube (Limitado a 512MB) ---
   sonarqube:
     image: sonarqube:community
     container_name: mi_sonar
@@ -32,6 +35,9 @@ services:
       - "9000:9000"
     environment:
       - SONAR_JDBC_URL=jdbc:h2:tcp://localhost/sonar;START_DELAY_SECS=0
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+      - SONAR_ES_JAVA_OPTS=-Xms256m -Xmx256m  # Limite memoria base de datos
+      - SONAR_WEB_JAVA_OPTS=-Xms256m -Xmx256m # Limite memoria web
     networks:
       - red-jenkins
 
