@@ -27,7 +27,7 @@ services:
     networks:
       - red-jenkins
 
-  # --- 3. SonarQube (Limitado a 512MB) ---
+# --- 3. SonarQube (Limitado a 512MB) ---
   sonarqube:
     image: sonarqube:community
     container_name: mi_sonar
@@ -36,8 +36,8 @@ services:
     environment:
       - SONAR_JDBC_URL=jdbc:h2:tcp://localhost/sonar;START_DELAY_SECS=0
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-      - SONAR_ES_JAVA_OPTS=-Xms256m -Xmx256m  # Limite memoria base de datos
-      - SONAR_WEB_JAVA_OPTS=-Xms256m -Xmx256m # Limite memoria web
+      - SONAR_ES_JAVA_OPTS=-Xms512m -Xmx512m  # <--- CAMBIO AQUÍ
+      - SONAR_WEB_JAVA_OPTS=-Xms512m -Xmx512m # <--- CAMBIO AQUÍ
     networks:
       - red-jenkins
 
