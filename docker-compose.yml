@@ -27,17 +27,17 @@ services:
     networks:
       - red-jenkins
 
-# --- 3. SonarQube (Limitado a 512MB) ---
+# --- 3. SonarQube ---
   sonarqube:
     image: sonarqube:community
     container_name: mi_sonar
     ports:
       - "9000:9000"
     environment:
-      - SONAR_JDBC_URL=jdbc:h2:tcp://localhost/sonar;START_DELAY_SECS=0
+      # HEMOS QUITADO LA LÍNEA DE JDBC_URL
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-      - SONAR_ES_JAVA_OPTS=-Xms512m -Xmx512m  # <--- CAMBIO AQUÍ
-      - SONAR_WEB_JAVA_OPTS=-Xms512m -Xmx512m # <--- CAMBIO AQUÍ
+      - SONAR_ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - SONAR_WEB_JAVA_OPTS=-Xms512m -Xmx512m
     networks:
       - red-jenkins
 
